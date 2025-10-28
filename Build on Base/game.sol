@@ -8,7 +8,7 @@ contract GuessGame{
     uint public num;
 
     //Generated value
-    uint public randomNum;
+    uint public generatedNum;
 
     //Stores a user data
         struct User{
@@ -19,8 +19,9 @@ contract GuessGame{
     //Maps current user address to it's data
         mapping(address => User) public usersInfo;
 
-    function generateNum() public view returns(uint){
-            randomNum = return uint(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 100;
+    function generateNum() public{
+        uint randomNum = uint(keccak256(abi.encodePacked(block.timestamp,block.prevrandao,msg.sender)));
+        generatedNum = (randomNum % 100);
     }    
 
     function check() public {
