@@ -6,6 +6,25 @@
 	"output": {
 		"abi": [
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "guess",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "answer",
+						"type": "uint256"
+					}
+				],
+				"name": "GuessFailed",
+				"type": "event"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -17,18 +36,8 @@
 				"outputs": [
 					{
 						"internalType": "address",
-						"name": "user",
+						"name": "",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "guessCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amountWon",
-						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -83,6 +92,11 @@
 						"type": "address"
 					},
 					{
+						"internalType": "bool",
+						"name": "isRegistered",
+						"type": "bool"
+					},
+					{
 						"internalType": "uint256",
 						"name": "guessCount",
 						"type": "uint256"
@@ -125,11 +139,11 @@
 	},
 	"sources": {
 		"Build on Base/game.sol": {
-			"keccak256": "0xd83c853f138d5753f300f906c88568311abf40d316c5c86583649c74e98c4700",
+			"keccak256": "0xe2927bd393d933ad9f740644e244d530057f8e7ad7a788e1ab4df4a508dbf9b1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b77da9380439b13adca8d630a8c336282aef859f03bd36de661506e6be6410ee",
-				"dweb:/ipfs/Qmai6xTPiwwDgxRJPqH2E65vKfzBnbvF4C68W8oSkPNwoe"
+				"bzz-raw://0b405cefafa80a7518d906af2e2d1303d23f776fdf38b2c2ca660c9e73f6b233",
+				"dweb:/ipfs/QmQJH3C9cnN2sg8RzogQncawrzCLTdxjT6xMJStd3nETFx"
 			]
 		}
 	},
