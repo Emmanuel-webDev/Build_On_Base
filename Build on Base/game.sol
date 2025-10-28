@@ -49,4 +49,21 @@ contract GuessGame {
             emit GuessFailed(num, generatedNum);
         }
     }
+
+    function leaderBoard() public view returns (address[] memory players, uint[] memory guesses, uint[] memory corrects) {
+    uint length = allPlayers.length;
+
+    players = new address[](length);
+    guesses = new uint[](length);
+    corrects = new uint[](length);
+
+    for (uint i = 0; i < length; i++) {
+        address playerAddr = allPlayers[i];
+        players[i] = playerAddr;
+        guesses[i] = usersInfo[playerAddr].guessCount;
+        corrects[i] = usersInfo[playerAddr].amountWon;
+    }
+
+}
+
 }
