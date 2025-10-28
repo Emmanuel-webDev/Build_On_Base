@@ -6,10 +6,32 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
-				"name": "check",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "allPlayers",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "guessCount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountWon",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -33,16 +55,16 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "num",
-				"outputs": [
+				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "num",
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "play",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -103,11 +125,11 @@
 	},
 	"sources": {
 		"Build on Base/game.sol": {
-			"keccak256": "0xf93ce116c770d5d8d5f833c1420b8be4d33681a193b59acfef011283ae9de1ac",
+			"keccak256": "0xd83c853f138d5753f300f906c88568311abf40d316c5c86583649c74e98c4700",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6fa8ea0a5dc7d91fd732349e404fa3bc1ff2aff7ecd360e4268c5e8c185e7ea9",
-				"dweb:/ipfs/QmTAFHAD4dTyELE1rLCU2jNeGT5mADREwtBCLTnoCtW1XV"
+				"bzz-raw://b77da9380439b13adca8d630a8c336282aef859f03bd36de661506e6be6410ee",
+				"dweb:/ipfs/Qmai6xTPiwwDgxRJPqH2E65vKfzBnbvF4C68W8oSkPNwoe"
 			]
 		}
 	},
