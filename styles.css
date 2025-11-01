@@ -149,6 +149,13 @@ tr td{
     text-align: center;
 }
 
+footer{
+    margin-top: 40px;
+    padding: 20px 0;
+    background: #f6f8ff;
+    border-top: 1px solid #e6e8f0;
+}
+
 footer p{
     text-align: center;
 }
