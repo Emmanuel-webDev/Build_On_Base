@@ -149,4 +149,12 @@ tr td{
     text-align: center;
 }
 
+footer p{
+    text-align: center;
+}
+
+span{
+    color: #0052ff;
+    font-size: 24px;
+}
 
