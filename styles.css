@@ -1,0 +1,152 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: #f6f8ff; /* Base soft background */
+    color: #0a0a0a;
+}
+
+#header .sect{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 18px 40px;
+   background: white;
+   border-bottom: 1px solid #e6e8f0;
+}
+
+h1{
+    font-weight: 700;
+    color: #0052ff;
+    letter-spacing: -0.5px;
+}
+
+button{
+    background: #0052ff;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background: #003ecb;
+}
+
+.game-container{
+    max-width: 450px;
+    margin: 60px;
+    padding: 75px 40px;
+    border-radius: 16px;
+    background-color: white;
+    border: 1px solid #dce1ff;
+    box-shadow: 0px 16px 16px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+#userGuess{
+    width: 250px;
+    padding: 10px;
+    font-size: 17px;
+    border-radius: 8px;
+    border: 1px solid #d3d7f3;
+    outline: none;
+    margin-top: 20px;
+}
+
+#userGuess:focus{
+    border-color: #0052ff;
+}
+
+#feedback{
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#board h2{
+    text-align: center;
+    color: #0052ff;
+}
+
+.table-wrap{
+    width: 700px;
+    max-width: 700px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #d3d7f3;
+    box-shadow: 0px 5px 14px rgba(0,0,0,0.06);
+    background: white;
+    overflow: hidden;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    max-height: 500px;
+    overflow-y: auto;
+    width: 100%;
+}  
+
+thead{
+    background-color: #0052ff;
+    color: white;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+th, td{
+    padding: 16px;
+}
+
+tbody tr:nth-child(even){
+    background-color: #f0f4ff;
+}
+
+tr td{
+    text-align: center;
+}
+
+
+.main-layout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20%;
+    padding: 40px;
+    flex-wrap: wrap; 
+}
+
+#msg {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: #f2f4f7;
+  border-radius: 40px;
+  padding: 6px 14px;
+  font-weight: 600;
+  color: #111;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid #e5e7eb;
+  width: fit-content;
+}
+
+#msg svg {
+  width: 22px;
+  height: 22px;
+}
+
+#info {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+
+
