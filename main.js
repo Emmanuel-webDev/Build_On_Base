@@ -179,13 +179,14 @@ document.getElementById("connect").onclick = async function init() {
     signer = provider.getSigner(); //account that is connected
     contract = new ethers.Contract(contractAddress, contractABI, signer);
     document.getElementById("connect").style.display = "none";
+    let addr = await signer.getAddress();
     document.getElementById(
       "msg"
     ).innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
   <circle cx="12" cy="12" r="12" fill="#0052FF"/>
   <path d="M14.45 11.32H9.55C9.22 11.32 8.95 11.59 8.95 11.92C8.95 12.25 9.22 12.52 9.55 12.52H14.45C14.78 12.52 15.05 12.25 15.05 11.92C15.05 11.59 14.78 11.32 14.45 11.32Z" fill="white"/>
 </svg>
- ${await signer.getAddress()}`;
+ ${addr.slice(0, 6)}...${addr.slice(-4)}`;
     document.getElementById("msg").style.display = "flex";
   } else {
     alert("Please install an EVM wallet!");
