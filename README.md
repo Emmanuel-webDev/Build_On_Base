@@ -1,5 +1,8 @@
 # Number guessing game on base network
 
+[![Visit Website](https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue)](https://number-guess-on-base.netlify.app/)
+
+
 ## How to play
 
 . User are expected to sign-in using their wallet that supports base network
