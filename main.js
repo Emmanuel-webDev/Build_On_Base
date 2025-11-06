@@ -1,3 +1,5 @@
+import {connectWalletConnect} from "./wallet.js";
+
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
 //Contract ABI
@@ -137,47 +139,53 @@ const readContract = new ethers.Contract(
 );
 
 document.getElementById("connect").onclick = async function init() {
-  if (window.ethereum) {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []); //ask user to connect wallet
+  try {
+    if (window.ethereum) {
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []); //ask user to connect wallet
 
-    try {
-      // Try switching the network
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [
-          { chainId: "0x2105" }, // 84532 in hex
-        ],
-      });
-    } catch (switchError) {
-      // If the chain is not added yet, we can add it
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0x2105",
-                chainName: "Base Mainnet",
-                nativeCurrency: {
-                  name: "Ethereum",
-                  symbol: "ETH",
-                  decimals: 18,
+      try {
+        // Try switching the network
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [
+            { chainId: "0x2105" }, // Base Mainnet chain ID
+          ],
+        });
+      } catch (switchError) {
+        // If the chain is not added yet, we can add it
+        if (switchError.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: "0x2105",
+                  chainName: "Base Mainnet",
+                  nativeCurrency: {
+                    name: "Ethereum",
+                    symbol: "ETH",
+                    decimals: 18,
+                  },
+                  rpcUrls: ["https://mainnet.base.org"],
+                  blockExplorerUrls: ["https://basescan.org"],
                 },
-                rpcUrls: ["https://mainnet.base.org"],
-                blockExplorerUrls: ["https://basescan.org"],
-              },
-            ],
-          });
-        } catch (addError) {
-          console.error("Failed to add network:", addError);
+              ],
+            });
+          } catch (addError) {
+            console.error("Failed to add network:", addError);
+          }
+        } else {
+          console.error("Failed to switch network:", switchError);
         }
-      } else {
-        console.error("Failed to switch network:", switchError);
       }
+    } else {
+      provider = await connectWalletConnect();
     }
+
     signer = provider.getSigner(); //account that is connected
     contract = new ethers.Contract(contractAddress, contractABI, signer);
+
     document.getElementById("connect").style.display = "none";
     let addr = await signer.getAddress();
     document.getElementById(
@@ -188,10 +196,12 @@ document.getElementById("connect").onclick = async function init() {
 </svg>
  ${addr.slice(0, 6)}...${addr.slice(-4)}`;
     document.getElementById("msg").style.display = "flex";
-  } else {
-    alert("Please install an EVM wallet!");
+
+    await playerStat();
+
+  } catch (error) {
+    alert("Error connecting wallet:", error);
   }
-  await playerStat();
 };
 
 document.getElementById("actionButton").onclick = async function () {
@@ -292,18 +302,20 @@ async function playerStat() {
     const guessCount = Number(userData.guessCount);
     const amountWon = Number(userData.amountWon);
 
+    let userRank = loadLeaderboardData.findIndex(
+      (entry) => entry.player.toLowerCase() === userAddress.toLowerCase()
+    );
 
-    let userRank = loadLeaderboardData.findIndex(entry => entry.player.toLowerCase() === userAddress.toLowerCase());
-
-     if (userRank !== -1) {
+    if (userRank !== -1) {
       userRank = userRank + 1; // convert from array index → rank number
       document.getElementById("info").style.display = "block";
-      document.getElementById("playerStat").innerHTML = `Your Rank: ${userRank} | Total Guesses: ${guessCount} | Amount Won: ${amountWon}`;
+      document.getElementById(
+        "playerStat"
+      ).innerHTML = `Your Rank: ${userRank} | Total Guesses: ${guessCount} | Amount Won: ${amountWon}`;
     } else {
       document.getElementById("playerStat").style.innerHTML = "N/A";
       return;
     }
-
   } catch (error) {
     console.error("Error fetching player stats:", error);
   }

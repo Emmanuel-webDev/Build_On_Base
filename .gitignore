@@ -2,3 +2,5 @@
 *.dbg.json
 artifacts/
 cache/
+node_modules/
+dist/
