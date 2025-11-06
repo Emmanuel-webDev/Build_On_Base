@@ -1,6 +1,6 @@
-const contractAddress = "0xF16CE3E6F2d56356b29631b5943758469afb9f89"; // Your contract address
+const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
-// Your contract ABI
+//Contract ABI
 const contractABI = [
   {
     anonymous: false,
@@ -127,7 +127,7 @@ const contractABI = [
 
 let provider, signer, contract;
 
-const RPC = "https://sepolia.base.org"; // Base Sepolia RPC
+const RPC = "https://mainnet.base.org"; // Base RPC
 const readProvider = new ethers.providers.JsonRpcProvider(RPC);
 
 const readContract = new ethers.Contract(
@@ -146,7 +146,7 @@ document.getElementById("connect").onclick = async function init() {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [
-          { chainId: "0x14A34" }, // 84532 in hex
+          { chainId: "0x2105" }, // 84532 in hex
         ],
       });
     } catch (switchError) {
@@ -157,15 +157,15 @@ document.getElementById("connect").onclick = async function init() {
             method: "wallet_addEthereumChain",
             params: [
               {
-                chainId: "0x14A34",
-                chainName: "Base Sepolia Testnet",
+                chainId: "0x2105",
+                chainName: "Base Mainnet",
                 nativeCurrency: {
-                  name: "Sepolia ETH",
+                  name: "Ethereum",
                   symbol: "ETH",
                   decimals: 18,
                 },
-                rpcUrls: ["https://sepolia.base.org"],
-                blockExplorerUrls: ["https://sepolia.basescan.org"],
+                rpcUrls: ["https://mainnet.base.org"],
+                blockExplorerUrls: ["https://basescan.org"],
               },
             ],
           });
