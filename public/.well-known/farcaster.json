@@ -1,17 +1,18 @@
-
-{
-  "accountAssociation": {
-    "header": "",
-    "payload": "",
-    "signature": ""
-  },
-  "baseBuilder": {
-    "ownerAddress": "0x29fF710a3244f09d25A64889e2a3C0984B01eD55"
-  },
-  "miniapp": {
-    "version": "1",
-    "name": "number-guess-game-on-base",
-    "homeUrl": "https://number-guess-on-base.netlify.app/",
-    "iconUrl": "https://number-guess-on-base.netlify.app/public/icon.png",
+[
+  {
+    "accountAssociation": {
+      "header": "",
+      "payload": "",
+      "signature": ""
+    },
+    "baseBuilder": {
+      "ownerAddress": "0x29fF710a3244f09d25A64889e2a3C0984B01eD55"
+    },
+    "miniapp": {
+      "version": "1",
+      "name": "number-guess-game-on-base",
+      "homeUrl": "https://number-guess-on-base.netlify.app/",
+      "iconUrl": "https://number-guess-on-base.netlify.app/public/icon.png"
+    }
   }
-}
+]
