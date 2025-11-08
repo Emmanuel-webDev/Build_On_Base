@@ -1,5 +1,10 @@
 import {connectWalletConnect} from "./wallet.js";
 
+import { sdk } from '@farcaster/miniapp-sdk';
+
+// Once app is ready to be displayed
+await sdk.actions.ready();
+
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
 //Contract ABI
