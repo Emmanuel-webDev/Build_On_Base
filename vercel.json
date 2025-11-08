@@ -1,9 +1,5 @@
 {
-  "buildCommand": "next build",
   "cleanUrls": true,
   "trailingSlash": false,
-  "public": true,
-  "files": [
-    ".well-known/**"
-  ]
+  "public": true
 }
