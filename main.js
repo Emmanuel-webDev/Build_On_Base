@@ -1,6 +1,7 @@
 import {connectWalletConnect} from "./wallet.js";
 
-import { sdk } from '@farcaster/miniapp-sdk';
+// Use Skypack CDN for browser-ready ESM to avoid bare module specifier errors
+import { sdk } from 'https://cdn.skypack.dev/@farcaster/miniapp-sdk@0.2.1';
 
 // Once app is ready to be displayed
 await sdk.actions.ready();
