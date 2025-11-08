@@ -1,18 +1,37 @@
-[
-  {
-    "accountAssociation": {
-      "header": "",
-      "payload": "",
-      "signature": ""
-    },
-    "baseBuilder": {
-      "ownerAddress": "0x29fF710a3244f09d25A64889e2a3C0984B01eD55"
-    },
-    "miniapp": {
-      "version": "1",
-      "name": "number-guess-game-on-base",
-      "homeUrl": "https://number-guess-on-base.netlify.app/",
-      "iconUrl": "https://number-guess-on-base.netlify.app/public/icon.png"
-    }
+{
+  "accountAssociation": { 
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "baseBuilder": {
+    "ownerAddress": "0x29fF710a3244f09d25A64889e2a3C0984B01eD55"
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "number-guess-on-base",
+    "homeUrl": "https://number-guess-on-base1.vercel.app",
+    "iconUrl": "https://number-guess-on-base1.vercel.app/icon.png",
+    "splashImageUrl": "https://number-guess-on-base1.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "webhookUrl": "https://number-guess-on-base1.vercel.app/api/webhook",
+    "subtitle": "Guess and win",
+    "description": "A fun and interactive game, put your prediction skills to work.",
+    "screenshotUrls": [
+      "https://number-guess-on-base1.vercel.app/screenshot.png"
+    ],
+    "primaryCategory": "games",
+    "tags": [
+      "games",
+      "onchaingames",
+      "miniapp",
+      "baseapps"
+    ],
+    "heroImageUrl": "https://number-guess-on-base1.vercel.app/hero.png",
+    "tagline": "Play instantly",
+    "ogTitle": "Number Guess on Base",
+    "ogDescription": "Guess the right number and test your luck — live on Base Mainnet!",
+    "ogImageUrl": "https://number-guess-on-base1.vercel.app/screenshot.png",
+    "noindex": true
   }
-]
+}
