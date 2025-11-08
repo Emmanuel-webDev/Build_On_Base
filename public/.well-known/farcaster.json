@@ -12,6 +12,8 @@
     "name": "number-guess-on-base",
     "homeUrl": "https://number-guess-on-base1.vercel.app",
     "iconUrl": "https://number-guess-on-base1.vercel.app/icon.png",
+    "imageUrl": "https://number-guess-on-base1.vercel.app/icon.png",
+    "buttonTitle": "Play Game 🎮",
     "splashImageUrl": "https://number-guess-on-base1.vercel.app/screenshot.png",
     "splashBackgroundColor": "#000000",
     "webhookUrl": "https://number-guess-on-base1.vercel.app/api/webhook",
