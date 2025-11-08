@@ -1,1 +1,2 @@
-/.well-known/*   /well-known/:splat   200
+/.well-known/farcaster.json   /well-known/farcaster.json   200
+
