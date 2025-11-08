@@ -1,8 +1,8 @@
 {
-  "accountAssociation": { 
-    "header": "",
-    "payload": "",
-    "signature": ""
+  "accountAssociation": {
+    "header": "eyJmaWQiOjk3Mzc5OCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweGQzNWYzQzM5NDI3RTZCNkFEZGU5MWYzNDEwYTIyMTFiNDNEOTgxOEYifQ",
+    "payload": "eyJkb21haW4iOiJudW1iZXItZ3Vlc3Mtb24tYmFzZTEudmVyY2VsLmFwcCJ9",
+    "signature": "F5m5y/HgUncw9cxVyPfiAtAmfxcFkXycv35+Vxl5mYhbHstq1gdO46TWDf4TTlmxKHqAUTOuVEiuvXO75CfWsBs="
   },
   "baseBuilder": {
     "ownerAddress": "0x29fF710a3244f09d25A64889e2a3C0984B01eD55"
@@ -35,6 +35,6 @@
     "ogTitle": "Number Guess on Base",
     "ogDescription": "Guess the right number and test your luck — live on Base Mainnet!",
     "ogImageUrl": "https://number-guess-on-base1.vercel.app/screenshot.png",
-    "noindex": true
+    "noindex": false
   }
 }
