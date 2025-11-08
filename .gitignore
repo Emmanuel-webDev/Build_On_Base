@@ -1,4 +1,4 @@
-*.json
+
 *.dbg.json
 artifacts/
 cache/
