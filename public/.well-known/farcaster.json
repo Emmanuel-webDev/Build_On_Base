@@ -12,31 +12,19 @@
     "name": "number-guess-on-base",
     "homeUrl": "https://number-guess-on-base1.vercel.app",
     "iconUrl": "https://number-guess-on-base1.vercel.app/icon.png",
-    "imageUrl": "https://number-guess-on-base1.vercel.app/icon.png",
+    "imageUrl": "https://number-guess-on-base1.vercel.app/preview.png",
     "buttonTitle": "Play Game 🎮",
-    "splashImageUrl": "https://number-guess-on-base1.vercel.app/screenshot.png",
-    "splashBackgroundColor": "#000000",
-    "webhookUrl": "https://number-guess-on-base1.vercel.app/api/webhook",
+    "splashImageUrl": "https://number-guess-on-base1.vercel.app/splash.png",
+    "splashBackgroundColor": "#0052FF",
     "subtitle": "Guess and win",
     "description": "A fun and interactive game, put your prediction skills to work.",
-    "screenshotUrls": [
-      "https://number-guess-on-base1.vercel.app/screenshot.png"
-    ],
-     "requiredChains": [
-      "eip155:8453"
-    ],
+    "developer": "Nze20",
+    "requiredChains": ["eip155:8453"],
     "primaryCategory": "games",
-    "tags": [
-      "games",
-      "onchaingames",
-      "miniapp",
-      "baseapps"
-    ],
-    "heroImageUrl": "https://number-guess-on-base1.vercel.app/screenshot.png",
-    "tagline": "Play instantly",
-    "ogTitle": "Number Guess on Base",
-    "ogDescription": "Guess the right number and test your luck — live on Base Mainnet!",
-    "ogImageUrl": "https://number-guess-on-base1.vercel.app/screenshot.png",
-    "noindex": false
+    "tags": ["games", "prediction", "base"],
+    "previewTitle": "Number Guess on Base",
+    "previewSubtitle": "Try your luck at guessing the number!",
+    "previewDescription": "Can you guess the number and win rewards? Play now on Base!"
   }
 }
+
