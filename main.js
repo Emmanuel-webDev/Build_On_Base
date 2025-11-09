@@ -1,12 +1,21 @@
 import {connectWalletConnect} from "./wallet.js";
 
-const { miniapp } = window.farcaster;
+// Safely obtain the Farcaster miniapp SDK global. The SDK exposes a global `miniapp`.
+// Some builds may attach it as `window.miniapp` or under `window.farcaster.miniapp`.
+const miniapp = (window.farcaster && window.farcaster.miniapp) || window.miniapp || null;
 
-(
-  async ()=>{
-    await miniapp.actions.ready();
+(async () => {
+  if (miniapp && miniapp.actions && typeof miniapp.actions.ready === "function") {
+    try {
+      await miniapp.actions.ready();
+    } catch (e) {
+      console.warn("miniapp.actions.ready() failed:", e);
+    }
+  } else {
+    // SDK not available — avoid destructure/runtime crash. It's fine to continue without it.
+    console.warn("Farcaster miniapp SDK not found. `miniapp` is not available on window.");
   }
-)();
+})();
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
