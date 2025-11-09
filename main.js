@@ -1,9 +1,10 @@
 import {connectWalletConnect} from "./wallet.js";
-import { sdk } from '@farcaster/frame-sdk';
+const { miniapp } = window.farcaster;
+
 
 (
 async () => {
-  await sdk.actions.ready();
+  await miniapp.actions.ready();
 }
 )()
 
