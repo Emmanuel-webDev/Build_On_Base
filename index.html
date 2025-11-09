@@ -110,6 +110,13 @@
           window.addEventListener("DOMContentLoaded", async()=>{
             try{
               await sdk.actions.ready();
+              const accnt = await sdk.wallet.accounts();
+              if(accnt.length > 0){
+                console.log("connected")
+              }else{
+                await sdk.wallet.connect();
+                
+              }
             }catch(err){
               console.error(err)
             }
