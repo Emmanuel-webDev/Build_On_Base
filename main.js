@@ -1,4 +1,4 @@
-import {connectWalletConnect} from "./wallet.js";
+//import {connectWalletConnect} from "./wallet.js";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -180,8 +180,19 @@ document.getElementById("connect").onclick = async function init() {
         }
       }
     } else {
-      provider = await connectWalletConnect();
+      //      provider = await connectWalletConnect();
+
+      if (window.farcaster?.miniapp?.ethereum) {
+        const provider = new ethers.providers.Web3Provider(
+          window.farcaster.miniapp.ethereum
+        );
+        const signer = provider.getSigner();
+        const addr = await signer.getAddress();
+        console.log("Connected Farcaster wallet:", addr);
+      } else {
+        console.log("Fallback to WalletConnect or MetaMask");
       }
+    }
 
     signer = provider.getSigner(); //account that is connected
     contract = new ethers.Contract(contractAddress, contractABI, signer);
