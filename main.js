@@ -1,5 +1,5 @@
-//import {connectWalletConnect} from "./wallet.js";
- import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
+import {connectWalletConnect} from "./wallet.js";
+import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -181,23 +181,7 @@ document.getElementById("connect").onclick = async function init() {
         }
       }
     } else {
-//     provider = await connectWalletConnect();
-        await sdk.actions.ready();
-        const provider = await sdk.wallet.getEthereumProvider();
-        const signer = provider.getSigner()
-        const addy = await signer.getAddress()
-       try {
-          const accounts = await provider.request({method: 'eth_accounts'})
-          if(accounts.length > 0){
-            document.getElementById("msg").innerHTML = `Connected: ${addy.slice(0, 6)}...${addy.slice(-4)}`
-          }else{
-            const newAccts = await provider.request({method: 'eth_requestAccounts'})
-            document.getElementById("msg").innerHTML = `Connected: ${addy.slice(0, 6)}...${addy.slice(-4)}`
-          }
-          
-        } catch (err) {
-          console.error(err);
-        }
+      provider = await connectWalletConnect();
     }
 
     signer = provider.getSigner(); //account that is connected
@@ -215,7 +199,6 @@ document.getElementById("connect").onclick = async function init() {
     document.getElementById("msg").style.display = "flex";
 
     await playerStat();
-
   } catch (error) {
     alert("Error connecting wallet:", error);
   }
