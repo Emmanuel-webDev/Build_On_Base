@@ -182,15 +182,17 @@ document.getElementById("connect").onclick = async function init() {
       }
     } else {
 //     provider = await connectWalletConnect();
+        await sdk.actions.ready();
+        const provider = await sdk.wallet.getEthereumProvider();
        try {
-          await sdk.actions.ready();
-          const accnt = await sdk.wallet.getAccounts?.() || [];
-          if (accnt.length > 0) {
-            console.log("connected");
-          } else {
-            await sdk.wallet.connect();
-            const newAccnt = await sdk.wallet.getAccounts?.() || [];
+          const accounts = await provider.request({method: 'eth_accounts'})
+          if(accounts.length > 0){
+            console.log("ok")
+          }else{
+            const newAccts = await provider.request({method: 'eth_requestAccounts'})
+            console.log('done')
           }
+          
         } catch (err) {
           console.error(err);
         }
