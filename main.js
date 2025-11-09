@@ -1,5 +1,4 @@
-//import {connectWalletConnect} from "./wallet.js";
-//import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
+import {connectWalletConnect} from "./wallet.js";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -181,21 +180,7 @@ document.getElementById("connect").onclick = async function init() {
         }
       }
     } else {
-      //     provider = await connectWalletConnect();
-
-      if (window.farcaster?.miniapp?.ethereum) {
-        const provider = new ethers.providers.Web3Provider(
-          window.farcaster.miniapp.ethereum,
-          "any"
-        );
-        await provider.send("eth_requestAccounts", []);
-        let sign = provider.getSigner();
-        const addy = await sign.getAddress();
-        console.log("Connected Address:", addy);
-        return;
-      } else {
-        console.log("Fallback to WalletConnect or MetaMask");
-      }
+      provider = await connectWalletConnect();
     }
 
     signer = provider.getSigner(); //account that is connected
