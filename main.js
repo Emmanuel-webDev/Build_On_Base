@@ -1,4 +1,5 @@
-import {connectWalletConnect} from "./wallet.js";
+//import {connectWalletConnect} from "./wallet.js";
+ import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -180,7 +181,19 @@ document.getElementById("connect").onclick = async function init() {
         }
       }
     } else {
-      provider = await connectWalletConnect();
+//     provider = await connectWalletConnect();
+       try {
+          await sdk.actions.ready();
+          const accnt = await sdk.wallet.accounts();
+          if (accnt.length > 0) {
+            console.log("connected");
+          } else {
+            await sdk.wallet.connect();
+            const newAccnt = await sdk.wallet.accounts();
+          }
+        } catch (err) {
+          console.error(err);
+        }
     }
 
     signer = provider.getSigner(); //account that is connected

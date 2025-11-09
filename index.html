@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="fc:miniapp" content='{
+    <meta
+      name="fc:miniapp"
+      content='{
   "version":"1",
   "imageUrl":"https://number-guess-on-base1.vercel.app/public/icon.png",
   "button":{
@@ -15,13 +17,19 @@
       "splashImageUrl":"https://number-guess-on-base1.vercel.app/public/splash.png"
       }
   }
-  }' />
+  }'
+    />
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="number-guess-on-base" />
-    <meta property="og:description" content="Play a fun number guessing game on Base. Guess a number between 0 and 100, compete for the leaderboard, and win bragging rights!" />
-    <meta property="og:image" content="https://number-guess-on-base1.vercel.app/public/preview.png" />
-
+    <meta
+      property="og:description"
+      content="Play a fun number guessing game on Base. Guess a number between 0 and 100, compete for the leaderboard, and win bragging rights!"
+    />
+    <meta
+      property="og:image"
+      content="https://number-guess-on-base1.vercel.app/public/preview.png"
+    />
 
     <title>Guessing Game</title>
     <link rel="stylesheet" href="styles.css" />
@@ -46,7 +54,6 @@
     </div>
 
     <div class="main-layout">
-
       <div class="game-container">
         <i
           >NB: Simple guess game, You only need to guess a random number from 0
@@ -86,9 +93,7 @@
     </div>
 
     <div id="info">
-      <h5 id="playerStat">
-        
-      </h5>
+      <h5 id="playerStat"></h5>
     </div>
 
     <footer>
@@ -100,21 +105,27 @@
     <script
       src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"
       type="application/javascript"
-
     ></script>
 
-        <!-- Farcaster miniapp SDK (UMD build) - exposes `miniapp` global -->
-        <script type="module">
-          import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk"
+    <!-- Farcaster miniapp SDK (UMD build) - exposes `miniapp` global -->
+    <script type="module">
+      import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
 
-          window.addEventListener("DOMContentLoaded", async()=>{
-            try{
-              await sdk.actions.ready();
-            }catch(err){
-              console.error(err)
-            }
-          })
-        </script>
+      window.addEventListener("DOMContentLoaded", async () => {
+        try {
+          await sdk.actions.ready();
+          const accnt = await sdk.wallet.accounts();
+          if (accnt.length > 0) {
+            console.log("connected");
+          } else {
+            await sdk.wallet.connect();
+            const newAccnt = await sdk.wallet.accounts();
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    </script>
 
     <script type="module" src="./main.js"></script>
   </body>
