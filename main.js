@@ -1,6 +1,17 @@
 import {connectWalletConnect} from "./wallet.js";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
+import { sdk } from '@farcaster/miniapp-sdk';
+
+// Once app is ready to be displayed in the Farcaster MiniApp, hide the splash screen
+(async () => {
+  try {
+    if (sdk?.actions?.ready) await sdk.actions.ready();
+  } catch (err) {
+    // If the environment doesn't provide the MiniApp SDK, continue silently
+    console.warn('MiniApp SDK ready() not available:', err);
+  }
+})();
 
 //Contract ABI
 const contractABI = [

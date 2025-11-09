@@ -1,0 +1,23 @@
+{
+  "name": "build_on_base-ui",
+  "version": "1.0.0",
+  "description": "[![Visit Website](https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue)](https://number-guess-on-base.netlify.app/)",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emmanuel-webDev/Build_On_Base.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Emmanuel-webDev/Build_On_Base/issues"
+  },
+  "homepage": "https://github.com/Emmanuel-webDev/Build_On_Base#readme",
+  "dependencies": {
+    "@farcaster/miniapp-sdk": "^0.2.1"
+  }
+}
