@@ -184,12 +184,12 @@ document.getElementById("connect").onclick = async function init() {
 //     provider = await connectWalletConnect();
        try {
           await sdk.actions.ready();
-          const accnt = await sdk.wallet.accounts();
+          const accnt = await sdk.wallet.getAccounts?.() || [];
           if (accnt.length > 0) {
             console.log("connected");
           } else {
             await sdk.wallet.connect();
-            const newAccnt = await sdk.wallet.accounts();
+            const newAccnt = await sdk.wallet.getAccounts?.() || [];
           }
         } catch (err) {
           console.error(err);
