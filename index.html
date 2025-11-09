@@ -105,12 +105,14 @@
 
         <!-- Farcaster miniapp SDK (UMD build) - exposes `miniapp` global -->
         <script type="module">
-          import MiniAppSDK from "https://esm.sh/@farcaster/miniapp-sdk"
-          const miniapp = MiniAppSDK();
-          window.miniapp = miniapp;
+          import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk"
 
           window.addEventListener("DOMContentLoaded", async()=>{
-            miniapp.actions.ready();
+            try{
+              await sdk.actions.ready();
+            }catch(err){
+              console.error(err)
+            }
           })
         </script>
 
