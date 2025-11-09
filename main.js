@@ -184,13 +184,15 @@ document.getElementById("connect").onclick = async function init() {
 //     provider = await connectWalletConnect();
         await sdk.actions.ready();
         const provider = await sdk.wallet.getEthereumProvider();
+        const signer = provider.getSigner()
+        const addy = await signer.getAddress()
        try {
           const accounts = await provider.request({method: 'eth_accounts'})
           if(accounts.length > 0){
-            console.log("ok")
+            document.getElementById("msg").innerHTML = `Connected: ${addy.slice(0, 6)}...${addy.slice(-4)}`
           }else{
             const newAccts = await provider.request({method: 'eth_requestAccounts'})
-            console.log('done')
+            document.getElementById("msg").innerHTML = `Connected: ${addy.slice(0, 6)}...${addy.slice(-4)}`
           }
           
         } catch (err) {
