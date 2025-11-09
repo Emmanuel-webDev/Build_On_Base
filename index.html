@@ -103,8 +103,16 @@
 
     ></script>
 
-      <!-- Farcaster miniapp SDK (UMD build) - exposes `miniapp` global -->
-    <script src="https://cdn.jsdelivr.net/npm/@farcaster/miniapp-sdk/dist/index.min.js"></script>
+        <!-- Farcaster miniapp SDK (UMD build) - exposes `miniapp` global -->
+        <script type="module">
+          import {createClient} from "https://esm.sh/@farcaster/miniapp-sdk"
+          const miniapp = createClient();
+          window.miniapp = miniapp;
+
+          window.addEventListener("DOMContentLoaded", async()=>{
+            miniapp.actions.ready();
+          })
+        </script>
 
     <script type="module" src="./main.js"></script>
   </body>
