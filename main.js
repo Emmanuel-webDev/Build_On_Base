@@ -2,9 +2,38 @@ import {connectWalletConnect} from "./wallet.js";
 
 // Safely obtain the Farcaster miniapp SDK global. The SDK exposes a global `miniapp`.
 // Some builds may attach it as `window.miniapp` or under `window.farcaster.miniapp`.
-const miniapp = (window.farcaster && window.farcaster.miniapp) || window.miniapp || null;
+let miniapp = (window.farcaster && window.farcaster.miniapp) || window.miniapp || null;
+
+// Helper to dynamically load a script and wait for it to be ready.
+function loadScript(src, timeout = 8000) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = src;
+    s.async = true;
+    s.onload = () => resolve(s);
+    s.onerror = (e) => reject(new Error(`Failed to load script: ${src}`));
+    document.head.appendChild(s);
+
+    if (timeout) {
+      setTimeout(() => reject(new Error(`Loading script timed out: ${src}`)), timeout);
+    }
+  });
+}
 
 (async () => {
+  // If SDK is missing, try loading it dynamically from the CDN used in index.html.
+  if (!miniapp) {
+    try {
+      console.info("miniapp not present, attempting to load Farcaster SDK from CDN...");
+      await loadScript("https://cdn.jsdelivr.net/npm/@farcaster/miniapp-sdk/dist/index.min.js");
+      // Re-check globals after loading
+      miniapp = (window.farcaster && window.farcaster.miniapp) || window.miniapp || null;
+      if (miniapp) console.info("Farcaster miniapp SDK loaded from CDN.");
+    } catch (err) {
+      console.warn("Unable to load Farcaster miniapp SDK from CDN:", err);
+    }
+  }
+
   if (miniapp && miniapp.actions && typeof miniapp.actions.ready === "function") {
     try {
       await miniapp.actions.ready();
@@ -12,7 +41,7 @@ const miniapp = (window.farcaster && window.farcaster.miniapp) || window.miniapp
       console.warn("miniapp.actions.ready() failed:", e);
     }
   } else {
-    // SDK not available — avoid destructure/runtime crash. It's fine to continue without it.
+    // SDK still not available — log a helpful message.
     console.warn("Farcaster miniapp SDK not found. `miniapp` is not available on window.");
   }
 })();
