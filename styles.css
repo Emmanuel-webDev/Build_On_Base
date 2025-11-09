@@ -1,7 +1,4 @@
-@media (min-width: 651px) {
-  
-
-body {
+  body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
@@ -168,7 +165,6 @@ span {
   font-size: 24px;
 }
 
-}
 
 @media (max-width: 600px) {
   body {
