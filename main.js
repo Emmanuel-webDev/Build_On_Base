@@ -1,7 +1,4 @@
-//import {connectWalletConnect} from "./wallet.js";
-import { createConfig, connect, getAccount } from "https://esm.sh/wagmi@1.4.13";
-import { http, custom } from "https://esm.sh/viem@1.21.3";
-import { base } from "https://esm.sh/viem/chains@1.21.3";
+import {connectWalletConnect} from "./wallet.js";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -183,29 +180,7 @@ document.getElementById("connect").onclick = async function init() {
         }
       }
     } else {
-      //      provider = await connectWalletConnect();
-       // Detect Farcaster Mini App Wallet
-      const farcasterProvider = window?.farcaster?.miniapp?.ethereum;
-
-      const config = createConfig({
-        chains: [base],
-        transports: {
-          [base.id]: farcasterProvider
-            ? custom(farcasterProvider) // ✅ Use Farcaster embedded wallet
-            : http(), // ❌ Fallback for browser testing
-        },
-      });
-
-      if(farcasterProvider){
-         const account = getAccount(config);
-      if (!account.address) {
-        // Farcaster wallet auto-connects when app loads, no request is needed.
-        console.log("Waiting for wallet...");
-      }
-      console.log("Connected Address:", account.address);
-      return account.address;
-    }
-     
+      provider = await connectWalletConnect();
       }
 
     signer = provider.getSigner(); //account that is connected
