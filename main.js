@@ -1,12 +1,4 @@
 import {connectWalletConnect} from "./wallet.js";
-const { miniapp } = window.farcaster;
-
-
-(
-async () => {
-  await miniapp.actions.ready();
-}
-)()
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
