@@ -1,17 +1,40 @@
 import {connectWalletConnect} from "./wallet.js";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
-import { sdk } from '@farcaster/miniapp-sdk';
 
-// Once app is ready to be displayed in the Farcaster MiniApp, hide the splash screen
+// Attempt to call sdk.actions.ready() when running inside the Farcaster MiniApp.
+// Browsers can't resolve bare package specifiers like `@farcaster/miniapp-sdk`
+// without a bundler, so we avoid a static import. Strategy:
+// 1) If a global `sdk` is injected by the host, use it.
+// 2) Otherwise try a dynamic ESM import from a CDN (unpkg ?module) as a fallback.
+// 3) If both fail, continue silently so local development still works.
 (async () => {
   try {
-    if (sdk?.actions?.ready) await sdk.actions.ready();
+    const globalCandidates = [window?.sdk, window?.Farcaster?.sdk, window?.farcaster?.sdk, window?.__FARCASTER_MINIAPP_SDK__, null];
+    let sdkInstance = globalCandidates.find((c) => c && typeof c.actions?.ready === 'function');
+
+    if (!sdkInstance) {
+      // Try dynamic import from unpkg as an ESM module. This may fail in restricted environments.
+      try {
+        const mod = await import('https://unpkg.com/@farcaster/miniapp-sdk@latest?module');
+        // The SDK might be exported as `sdk` or default; normalise.
+        sdkInstance = mod?.sdk || mod?.default || null;
+      } catch (err) {
+        // CDN import failed; leave sdkInstance null and continue.
+        // This is expected when offline or when the host already provides the SDK.
+        // console.warn('Dynamic import of MiniApp SDK failed:', err);
+      }
+    }
+
+    if (sdkInstance?.actions?.ready) {
+      await sdkInstance.actions.ready();
+    }
   } catch (err) {
-    // If the environment doesn't provide the MiniApp SDK, continue silently
-    console.warn('MiniApp SDK ready() not available:', err);
+    console.warn('MiniApp SDK ready() not available or failed:', err);
   }
 })();
+
+
 
 //Contract ABI
 const contractABI = [
