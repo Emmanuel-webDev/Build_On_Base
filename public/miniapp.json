@@ -1,0 +1,13 @@
+{
+  "version": "1",
+  "imageUrl": "https://number-guess-on-base1.vercel.app/public/icon.png",
+  "button": {
+    "title": "Play Now",
+    "action": {
+      "type": "launch_miniapp",
+      "name": "number-guess-on-base",
+      "url": "https://number-guess-on-base1.vercel.app",
+      "splashImageUrl": "https://number-guess-on-base1.vercel.app/public/splash.png"
+    }
+  }
+}
