@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/Emmanuel-webDev/Build_On_Base#readme",
   "dependencies": {
-    "@farcaster/miniapp-sdk": "^0.2.1"
+    "@farcaster/frame-sdk": "^0.1.12"
   }
 }

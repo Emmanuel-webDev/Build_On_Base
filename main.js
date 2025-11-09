@@ -1,29 +1,11 @@
 import {connectWalletConnect} from "./wallet.js";
+import { sdk } from '@farcaster/frame-sdk';
 
-(async () => {
-  try {
-    // Prefer host-injected SDKs
-    let sdkInstance = window.sdk || window.Farcaster?.sdk || window.farcaster?.sdk || null;
-
-    // Fallback: dynamic ESM import from unpkg (only runs if no injected sdk)
-    if (!sdkInstance) {
-      try {
-        const mod = await import('https://unpkg.com/@farcaster/miniapp-sdk@latest?module');
-        sdkInstance = mod?.sdk || mod?.default || null;
-      } catch (cdnErr) {
-        // CDN import may fail in offline/CSP environments — that's okay
-        // console.warn('CDN import failed:', cdnErr);
-      }
-    }
-
-    // Call ready() if available
-    if (sdkInstance?.actions?.ready && typeof sdkInstance.actions.ready === 'function') {
-      await sdkInstance.actions.ready();
-    }
-  } catch (err) {
-    console.warn('MiniApp SDK ready() failed:', err);
-  }
-})();
+(
+async () => {
+  await sdk.actions.ready();
+}
+)()
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
