@@ -1,5 +1,4 @@
 import {connectWalletConnect} from "./wallet.js";
-import { sdk } from '@farcaster/miniapp-sdk';
 
 (async () => {
   try {
