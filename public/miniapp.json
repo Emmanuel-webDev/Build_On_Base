@@ -1,0 +1,7 @@
+{
+  "name": "number-guess-on-base",
+  "description": "A simple guessing game on Base.",
+  "icon": "/icon.png",
+  "url": "https://number-guess-on-base1.vercel.app/",
+  "version": "1.0.0"
+}
