@@ -15,8 +15,7 @@ const BASE_NETWORK_INFO = {
 // --- Farcaster Wallet Logic ---
 const initFarcaster = async () => {
   try {
-    const isMiniApp =
-      (await sdk.isInMiniApp()) || window.farcaster?.miniapp?.ethereum;
+    const isMiniApp = await sdk.isInMiniApp();
 
     if (!isMiniApp) {
       console.log("Not in a Farcaster client. Wallet connection may not work.");
@@ -46,7 +45,6 @@ const initFarcaster = async () => {
 const connectWallet = async () => {
   if (!provider) {
     console.log("not connected");
-    return;
   }
 
   try {
