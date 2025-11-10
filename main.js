@@ -120,6 +120,8 @@ const initFarcaster = async () => {
   }
 };
 
+ await initFarcaster();
+
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
 //Contract ABI
@@ -301,7 +303,6 @@ document.getElementById("connect").onclick = async function init() {
       }
     } else {
       //      provider = await connectWalletConnect();
-      await initFarcaster();
       await connectWallet();
       return;
     }
