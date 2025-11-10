@@ -13,6 +13,35 @@ const BASE_NETWORK_INFO = {
 };
 
 // --- Farcaster Wallet Logic ---
+const initFarcaster = async () => {
+  try {
+    const isMiniApp =
+      (await sdk.isInMiniApp()) || window.farcaster?.miniapp?.ethereum;
+
+    if (!isMiniApp) {
+      console.log("Not in a Farcaster client. Wallet connection may not work.");
+      return;
+    }
+
+    // 3. Get the native EIP-1193 provider
+    provider = sdk.wallet.getEthereumProvider();
+    if (!provider) {
+      console.log(
+        "Farcaster Mini App detected, but provider is unavailable.",
+        "bg-red-600"
+      );
+      return;
+    }
+
+    // 4. App is ready to be displayed. This removes the splash screen.
+    await sdk.actions.ready();
+    console.log("Farcaster Ready. Click Connect to proceed.");
+
+    // 5. Automatically attempt to connect/check status after ready.
+  } catch (error) {
+    console.error("Initialization error:", error);
+  }
+};
 
 const connectWallet = async () => {
   if (!provider) {
@@ -90,37 +119,6 @@ const switchToBase = async () => {
   }
 };
 
-const initFarcaster = async () => {
-  try {
-    const isMiniApp =
-      (await sdk.isInMiniApp()) || window.farcaster?.miniapp?.ethereum;
-
-    if (!isMiniApp) {
-      console.log("Not in a Farcaster client. Wallet connection may not work.");
-      return;
-    }
-
-    // 3. Get the native EIP-1193 provider
-    provider = sdk.wallet.getEthereumProvider();
-    if (!provider) {
-      console.log(
-        "Farcaster Mini App detected, but provider is unavailable.",
-        "bg-red-600"
-      );
-      return;
-    }
-
-    // 4. App is ready to be displayed. This removes the splash screen.
-    await sdk.actions.ready();
-    console.log("Farcaster Ready. Click Connect to proceed.");
-
-    // 5. Automatically attempt to connect/check status after ready.
-  } catch (error) {
-    console.error("Initialization error:", error);
-  }
-};
-
- await initFarcaster();
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -445,4 +443,5 @@ async function playerStat() {
 }
 
 // Initial load of leaderboard
+window.onload = initFarcaster;
 window.onload = loadLeaderboard;
