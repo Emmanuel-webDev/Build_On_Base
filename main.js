@@ -160,8 +160,11 @@ const initFarcaster = async () => {
     }
 
     // 3. Get the native EIP-1193 provider
-    provider = await sdk.wallet.getEthereumProvider();
-    console.log(provider);
+    const farcasterProvider = await sdk.wallet.getEthereumProvider();    
+    provider = new ethers.BrowserProvider(farcasterProvider)
+    signer = await provider.getSigner()
+    console.log(signer);
+
     if (!provider) {
       console.log(
         "Farcaster Mini App detected, but provider is unavailable.",
@@ -195,7 +198,7 @@ const connectWallet = async () => {
       return;
     }
 
-    const address = accounts[0];
+    const address = signer.getAddress();
 
     document.getElementById("connect").style.display = "none";
 
@@ -318,7 +321,7 @@ document.getElementById("connect").onclick = async function init() {
     }
 
     await playerStat();
-    
+
   } catch (error) {
     alert("Error connecting wallet:", error);
   }
