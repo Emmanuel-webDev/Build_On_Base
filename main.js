@@ -211,7 +211,7 @@ const connectWallet = async () => {
  ${address.slice(0, 6)}...${address.slice(-4)}`;
     document.getElementById("msg").style.display = "flex";
 
-    const chainIdHex = await provider.request({ method: "eth_chainId" });
+    const chainIdHex = await sdk.wallet.getEthereumProvider().request({ method: "eth_chainId" });
     const chainId = parseInt(chainIdHex, 16);
 
 
