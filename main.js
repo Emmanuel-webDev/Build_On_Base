@@ -161,8 +161,7 @@ const initFarcaster = async () => {
 
     // 3. Get the native EIP-1193 provider
     const farcasterProvider = await sdk.wallet.getEthereumProvider();    
-    provider = new ethers.BrowserProvider(farcasterProvider)
-    signer = await provider.getSigner()
+    provider = new ethers.providers.Web3Provider(farcasterProvider)
     console.log(signer);
 
     if (!provider) {
@@ -191,8 +190,9 @@ const connectWallet = async () => {
 
   try {
     // eth_requestAccounts triggers the wallet connection prompt
-    const accounts = await provider.request({ method: "eth_requestAccounts" });
-
+    const accounts = await provider.send("eth_requestAccounts", []);
+    signer = await provider.getSigner();
+    
     if (accounts.length === 0) {
       console.log("User rejected");
       return;
