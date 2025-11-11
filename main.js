@@ -181,6 +181,8 @@ const initFarcaster = async () => {
   }
 };
 
+ await initFarcaster()
+
 const connectWallet = async () => {
   if (!provider) {
     console.log("not connected");
