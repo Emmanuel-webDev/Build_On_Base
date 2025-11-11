@@ -149,7 +149,6 @@ const readContract = new ethers.Contract(
   readProvider
 );
 
-
 // --- Farcaster Wallet Logic ---
 const initFarcaster = async () => {
   try {
@@ -162,7 +161,7 @@ const initFarcaster = async () => {
 
     // 3. Get the native EIP-1193 provider
     provider = await sdk.wallet.getEthereumProvider();
-    console.log(provider)
+    console.log(provider);
     if (!provider) {
       console.log(
         "Farcaster Mini App detected, but provider is unavailable.",
@@ -180,8 +179,7 @@ const initFarcaster = async () => {
     console.error("Initialization error:", error);
   }
 };
-
- await initFarcaster()
+await initFarcaster();
 
 const connectWallet = async () => {
   if (!provider) {
@@ -198,6 +196,8 @@ const connectWallet = async () => {
     }
 
     const address = accounts[0];
+
+    document.getElementById("connect").style.display = "none";
 
     document.getElementById(
       "msg"
@@ -299,27 +299,26 @@ document.getElementById("connect").onclick = async function init() {
           console.error("Failed to switch network:", switchError);
         }
       }
-    } else {
-      //      provider = await connectWalletConnect();
-      await connectWallet();
-      return;
-    }
 
-    signer = provider.getSigner(); //account that is connected
-    contract = new ethers.Contract(contractAddress, contractABI, signer);
+      signer = provider.getSigner(); //account that is connected
+      contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    document.getElementById("connect").style.display = "none";
-    let addr = await signer.getAddress();
-    document.getElementById(
-      "msg"
-    ).innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      document.getElementById("connect").style.display = "none";
+      let addr = await signer.getAddress();
+      document.getElementById(
+        "msg"
+      ).innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
   <circle cx="12" cy="12" r="12" fill="#0052FF"/>
   <path d="M14.45 11.32H9.55C9.22 11.32 8.95 11.59 8.95 11.92C8.95 12.25 9.22 12.52 9.55 12.52H14.45C14.78 12.52 15.05 12.25 15.05 11.92C15.05 11.59 14.78 11.32 14.45 11.32Z" fill="white"/>
 </svg>
  ${addr.slice(0, 6)}...${addr.slice(-4)}`;
-    document.getElementById("msg").style.display = "flex";
+      document.getElementById("msg").style.display = "flex";
+    } else {
+      await connectWallet();
+    }
 
     await playerStat();
+    
   } catch (error) {
     alert("Error connecting wallet:", error);
   }
