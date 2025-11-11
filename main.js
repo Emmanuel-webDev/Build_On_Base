@@ -211,7 +211,7 @@ const connectWallet = async () => {
  ${address.slice(0, 6)}...${address.slice(-4)}`;
     document.getElementById("msg").style.display = "flex";
 
-    const chainIdHex = await provider.request({ method: "eth_chainId" });
+    const chainIdHex = await provider.send({ method: "eth_chainId" });
     const chainId = parseInt(chainIdHex, 16);
 
     // Check and switch network after connection
@@ -234,7 +234,7 @@ const switchToBase = async () => {
 
   try {
     // 1. Attempt to switch network to BASE_CHAIN_ID_HEX (0x2105)
-    await provider.request({
+    await provider.send({
       method: "wallet_switchEthereumChain",
       params: [{ chainId: BASE_CHAIN_ID_HEX }],
     });
@@ -243,7 +243,7 @@ const switchToBase = async () => {
     if (switchError.code === 4902) {
       try {
         // 4. If 4902, request to add the Base Mainnet using BASE_NETWORK_INFO
-        await provider.request({
+        await provider.send({
           method: "wallet_addEthereumChain",
           params: [BASE_NETWORK_INFO],
         });
