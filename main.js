@@ -445,5 +445,4 @@ async function playerStat() {
 }
 
 // Initial load of leaderboard
-window.onload = initFarcaster;
 window.onload = loadLeaderboard;
