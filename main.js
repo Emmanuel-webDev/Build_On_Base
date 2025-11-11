@@ -192,13 +192,13 @@ const connectWallet = async () => {
     // eth_requestAccounts triggers the wallet connection prompt
     const accounts = await provider.send("eth_requestAccounts", []);
     signer = await provider.getSigner();
-    
+
     if (accounts.length === 0) {
       console.log("User rejected");
       return;
     }
 
-    const address = signer.getAddress();
+    const address = await signer.getAddress();
 
     document.getElementById("connect").style.display = "none";
 
