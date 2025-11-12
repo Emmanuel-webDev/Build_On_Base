@@ -160,8 +160,8 @@ const initFarcaster = async () => {
     }
 
     // 3. Get the native EIP-1193 provider
-    const farcasterProvider = await sdk.wallet.getEthereumProvider();
-    provider = new ethers.providers.Web3Provider(farcasterProvider);
+    const farcasterProvider = await sdk.wallet.getEthereumProvider();    
+    provider = new ethers.providers.Web3Provider(farcasterProvider)
     console.log(signer);
 
     if (!provider) {
@@ -213,6 +213,8 @@ const connectWallet = async () => {
 
     const chainIdHex = await provider.request({ method: "eth_chainId" });
     const chainId = parseInt(chainIdHex, 16);
+
+
 
     // Check and switch network after connection
     if (chainId !== BASE_CHAIN_ID_DEC) {
@@ -316,11 +318,12 @@ document.getElementById("connect").onclick = async function init() {
 </svg>
  ${addr.slice(0, 6)}...${addr.slice(-4)}`;
       document.getElementById("msg").style.display = "flex";
-      await playerStat();
     } else {
       await connectWallet();
-      await playerStat();
     }
+
+    //await playerStat();
+
   } catch (error) {
     alert("Error connecting wallet:", error);
   }
