@@ -235,7 +235,10 @@ const switchToBase = async () => {
 
   try {
     // 1. Attempt to switch network to BASE_CHAIN_ID_HEX (0x2105)
-    await sdk.wallet.switchNetwork(BASE_CHAIN_ID_DEC);
+    await sdk.wallet.switchNetwork(BASE_CHAIN_ID_HEX);
+
+    const network = await provider.getNetwork()
+    console.log(network.name)
 
   } catch (switchError) {
     // 3. Check for error code 4902: Chain not added to the wallet
