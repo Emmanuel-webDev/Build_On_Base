@@ -162,7 +162,7 @@ const initFarcaster = async () => {
     // 3. Get the native EIP-1193 provider
     const farcasterProvider = await sdk.wallet.getEthereumProvider();    
     provider = new ethers.providers.Web3Provider(farcasterProvider)
-    console.log(signer);
+   
 
     if (!provider) {
       console.log(
@@ -174,6 +174,7 @@ const initFarcaster = async () => {
 
     // 4. App is ready to be displayed. This removes the splash screen.
     await sdk.actions.ready();
+    await loadLeaderboard()
     console.log("Farcaster Ready. Click Connect to proceed.");
 
     // 5. Automatically attempt to connect/check status after ready.
@@ -216,6 +217,9 @@ const connectWallet = async () => {
 
     const network = await provider.getNetwork();
     const chainId = network.chainId
+
+    console.log(chainId)
+    console.log(signer.getAddress());
 
 
     // Check and switch network after connection
@@ -320,11 +324,12 @@ document.getElementById("connect").onclick = async function init() {
 </svg>
  ${addr.slice(0, 6)}...${addr.slice(-4)}`;
       document.getElementById("msg").style.display = "flex";
+      await playerStat();
+
     } else {
       await connectWallet();
+      await playerStat();
     }
-
-    //await playerStat();
 
   } catch (error) {
     alert("Error connecting wallet:", error);
@@ -366,7 +371,7 @@ document.getElementById("actionButton").onclick = async function () {
   }
 
   await loadLeaderboard();
- // await playerStat();
+  await playerStat();
 };
 
 document.getElementById("resetGame").onclick = async function () {
