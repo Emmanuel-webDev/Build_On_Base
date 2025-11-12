@@ -212,15 +212,8 @@ const connectWallet = async () => {
  ${address.slice(0, 6)}...${address.slice(-4)}`;
     document.getElementById("msg").style.display = "flex";
 
-    //const chainIdHex = await provider.request({ method: "eth_chainId" });
-    //const chainId = parseInt(chainIdHex, 16);
-
     const network = await provider.getNetwork();
     const chainId = network.chainId
-
-    console.log(chainId)
-    console.log(address);
-
 
     // Check and switch network after connection
     if (chainId !== BASE_CHAIN_ID_DEC) {
@@ -328,6 +321,7 @@ document.getElementById("connect").onclick = async function init() {
 
     } else {
       await connectWallet();
+     contract = new ethers.Contract(contractAddress, contractABI, signer);
       await playerStat();
     }
 
