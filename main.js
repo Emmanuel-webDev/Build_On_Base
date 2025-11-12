@@ -214,6 +214,7 @@ const connectWallet = async () => {
 
     const network = await provider.getNetwork();
     const chainId = network.chainId
+    console.log(network.name);
 
     // Check and switch network after connection
     if (chainId !== BASE_CHAIN_ID_DEC) {
@@ -421,6 +422,7 @@ async function playerStat() {
     }
 
     const userAddress = await signer.getAddress();
+    console.log(userAddress)
     const loadLeaderboardData = await loadLeaderboard();
 
     const userData = await contract.usersInfo(userAddress);
