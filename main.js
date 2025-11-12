@@ -214,7 +214,6 @@ const connectWallet = async () => {
 
     const network = await provider.getNetwork();
     const chainId = network.chainId
-    console.log(network.name);
 
     // Check and switch network after connection
     if (chainId !== BASE_CHAIN_ID_DEC) {
@@ -236,16 +235,14 @@ const switchToBase = async () => {
 
   try {
     // 1. Attempt to switch network to BASE_CHAIN_ID_HEX (0x2105)
-    await provider.send({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: BASE_CHAIN_ID_HEX }],
-    });
+    await sdk.wallet.switchNetwork(BASE_CHAIN_ID_DEC);
+
   } catch (switchError) {
     // 3. Check for error code 4902: Chain not added to the wallet
     if (switchError.code === 4902) {
       try {
         // 4. If 4902, request to add the Base Mainnet using BASE_NETWORK_INFO
-        await provider.send({
+        await provider.request({
           method: "wallet_addEthereumChain",
           params: [BASE_NETWORK_INFO],
         });
