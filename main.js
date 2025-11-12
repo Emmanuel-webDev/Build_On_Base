@@ -219,7 +219,7 @@ const connectWallet = async () => {
     const chainId = network.chainId
 
     console.log(chainId)
-    console.log(signer.getAddress());
+    console.log(address);
 
 
     // Check and switch network after connection
