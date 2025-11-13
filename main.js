@@ -1,13 +1,3 @@
-import {
-  createConfig,
-  http,
-  getAccount,
-  connect,
-} from "https://esm.sh/@wagmi/core";
-import { base } from "https://esm.sh/wagmi/chains";
-import { farcasterMiniApp } from "https://esm.sh/@farcaster/miniapp-wagmi-connector";
-import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
-import { ethers } from "https://esm.sh/ethers@6";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -141,7 +131,7 @@ let provider, signer, contract;
 let farAddress;
 
 const RPC = "https://mainnet.base.org"; // Base RPC
-const readProvider = new ethers.JsonRpcProvider(RPC);
+const readProvider = new ethers.providers.JsonRpcProvider(RPC);
 
 const readContract = new ethers.Contract(
   contractAddress,
@@ -149,68 +139,7 @@ const readContract = new ethers.Contract(
   readProvider
 );
 
-//Create Wagmi config with the MiniApp connector
-const config = createConfig({
-  chains: [base],
-  transports: { [base.id]: http() },
-  connectors: [farcasterMiniApp()],
-});
 
-// --- Farcaster Wallet connection ---
-const initFarcaster = async () => {
-  // Check if running in a Mini App
-  const isMiniApp = await sdk.isInMiniApp();
-
-  if (!isMiniApp) {
-    console.log("Not in a Farcaster client. Wallet connection may not work.");
-    return;
-  }
-
-  // skip splash screen
-  await sdk.actions.ready();
-  await loadLeaderboard();
-
-  //Get the native EIP-1193 provider
-  const farcasterProvider = await sdk.wallet.getEthereumProvider();
-  provider = new ethers.BrowserProvider(farcasterProvider);
-
-  signer = provider.getSigner();
-
-  contract = new ethers.Contract(contractAddress, contractABI, signer);
-};
-
-await initFarcaster();
-
-const connectFarcasterWallet = async () => {
-  try {
-    const account = getAccount(config);
-
-    // If already connected
-    if (account.status === "connected") {
-      return;
-    }
-
-    // Otherwise, trigger connect
-    const result = await connect(config, {
-      connector: config.connectors[0],
-    });
-
-    document.getElementById("connect").style.display = "none";
-    farAddress = result.accounts[0];
-    document.getElementById(
-      "msg"
-    ).innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-  <circle cx="12" cy="12" r="12" fill="#0052FF"/>
-  <path d="M14.45 11.32H9.55C9.22 11.32 8.95 11.59 8.95 11.92C8.95 12.25 9.22 12.52 9.55 12.52H14.45C14.78 12.52 15.05 12.25 15.05 11.92C15.05 11.59 14.78 11.32 14.45 11.32Z" fill="white"/>
-</svg>
- ${farAddress.slice(0, 6)}...${farAddress.slice(-4)}`;
-    document.getElementById("msg").style.display = "flex";
-
-    await playerStat();
-  } catch (err) {
-    console.error(err);
-  }
-};
 
 document.getElementById("connect").onclick = async function init() {
   try {
@@ -268,9 +197,6 @@ document.getElementById("connect").onclick = async function init() {
  ${addr.slice(0, 6)}...${addr.slice(-4)}`;
       document.getElementById("msg").style.display = "flex";
       await playerStat();
-    } else {
-      // If no Ethereum provider detected, try Farcaster MiniApp connection
-      await connectFarcasterWallet();
     }
   } catch (error) {
     alert("Error connecting wallet:", error);
