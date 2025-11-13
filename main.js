@@ -220,9 +220,7 @@ document.getElementById("actionButton").onclick = async function () {
   }
 
   try {
-    const gasLimit = await contract.connect(RPC).estimateGas.play(userGuess);
-
-    const tx = await contract.play(userGuess, { gasLimit: gasLimit });
+    const tx = await contract.play(userGuess);
 
     let generated = await contract.generatedNum();
     Number(generated);
