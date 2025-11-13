@@ -134,6 +134,8 @@ const contractABI = [
 
 let provider, signer, contract;
 
+let farAddress;
+
 const RPC = "https://mainnet.base.org"; // Base RPC
 const readProvider = new ethers.JsonRpcProvider(RPC);
 
@@ -190,7 +192,7 @@ const connectFarcasterWallet = async () => {
     });
 
     document.getElementById("connect").style.display = "none";
-    const userAddress = result.accounts[0];
+    farAddress = result.accounts[0];
     document.getElementById(
       "msg"
     ).innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -366,7 +368,7 @@ async function playerStat() {
     const userAddress = await signer.getAddress();
     const loadLeaderboardData = await loadLeaderboard();
 
-    const userData = await contract.usersInfo(userAddress);
+    const userData = await contract.usersInfo(userAddress || farAddress);
 
     const guessCount = Number(userData.guessCount);
     const amountWon = Number(userData.amountWon);
