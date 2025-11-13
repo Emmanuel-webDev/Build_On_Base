@@ -369,16 +369,18 @@ async function playerStat() {
       return;
     }
 
-    let userAddress = await signer.getAddress();
+    let userData;
+
+    let userAddress = await signer.getAddress() || farAddress;
     const loadLeaderboardData = await loadLeaderboard();
 
     // Check if running in a Mini App
     const isMiniApp = await sdk.isInMiniApp();
     if (isMiniApp) {
-      userAddress = farAddress;
+      userData = await contract.usersInfo(farAddress);
     }
 
-    const userData = await contract.usersInfo(userAddress);
+    userData = await contract.usersInfo(userAddress);
 
     const guessCount = Number(userData.guessCount);
     const amountWon = Number(userData.amountWon);
