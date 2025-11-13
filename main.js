@@ -200,7 +200,7 @@ const connectFarcasterWallet = async () => {
  ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
     document.getElementById("msg").style.display = "flex";
 
-    console.log("Connected:", result);
+    await playerStat();
   } catch (err) {
     console.error(err);
   }
@@ -308,7 +308,7 @@ document.getElementById("actionButton").onclick = async function () {
   }
 
   await loadLeaderboard();
-  //await playerStat();
+  await playerStat();
 };
 
 document.getElementById("resetGame").onclick = async function () {
@@ -364,7 +364,6 @@ async function playerStat() {
     }
 
     const userAddress = await signer.getAddress();
-    console.log(userAddress);
     const loadLeaderboardData = await loadLeaderboard();
 
     const userData = await contract.usersInfo(userAddress);
