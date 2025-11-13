@@ -1,4 +1,3 @@
-import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
 
 // Base Chain Details
 const BASE_CHAIN_ID_HEX = "0x2105"; // 8453 in decimal
@@ -149,84 +148,6 @@ const readContract = new ethers.Contract(
   readProvider
 );
 
-// --- Farcaster Wallet Logic ---
-const initFarcaster = async () => {
-  try {
-    const isMiniApp = await sdk.isInMiniApp();
-
-    if (!isMiniApp) {
-      console.log("Not in a Farcaster client. Wallet connection may not work.");
-      return;
-    }
-
-    // 3. Get the native EIP-1193 provider
-    const farcasterProvider = await sdk.wallet.getEthereumProvider();    
-    provider = new ethers.providers.Web3Provider(farcasterProvider)
-   
-
-    if (!provider) {
-      console.log(
-        "Farcaster Mini App detected, but provider is unavailable.",
-        "bg-red-600"
-      );
-      return;
-    }
-
-    // 4. App is ready to be displayed. This removes the splash screen.
-    await sdk.actions.ready();
-    await loadLeaderboard()
-    console.log("Farcaster Ready. Click Connect to proceed.");
-
-    // 5. Automatically attempt to connect/check status after ready.
-  } catch (error) {
-    console.error("Initialization error:", error);
-  }
-};
-await initFarcaster();
-
-const connectWallet = async () => {
-  if (!provider) {
-    console.log("not connected");
-  }
-
-  try {
-    // eth_requestAccounts triggers the wallet connection prompt
-    const accounts = await provider.send("eth_requestAccounts", []);
-    signer = await provider.getSigner();
-
-    if (accounts.length === 0) {
-      console.log("User rejected");
-      return;
-    }
-
-    const address = await signer.getAddress();
-
-    document.getElementById("connect").style.display = "none";
-
-    document.getElementById(
-      "msg"
-    ).innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-  <circle cx="12" cy="12" r="12" fill="#0052FF"/>
-  <path d="M14.45 11.32H9.55C9.22 11.32 8.95 11.59 8.95 11.92C8.95 12.25 9.22 12.52 9.55 12.52H14.45C14.78 12.52 15.05 12.25 15.05 11.92C15.05 11.59 14.78 11.32 14.45 11.32Z" fill="white"/>
-</svg>
- ${address.slice(0, 6)}...${address.slice(-4)}`;
-    document.getElementById("msg").style.display = "flex";
-
-    const network = await provider.getNetwork();
-    const chainId = network.chainId
-    console.log("Connected to chain ID:", chainId);
-
-  } catch (error) {
-    console.error("Connection error:", error);
-    // 4001 is standard EIP-1193 rejection error
-    if (error.code === 4001) {
-      console.log("Connection request rejected.");
-    } else {
-      console.log(`Connection failed: ${error.message || "Check console."}`);
-    }
-  }
-};
-
 
 document.getElementById("connect").onclick = async function init() {
   try {
@@ -269,8 +190,9 @@ document.getElementById("connect").onclick = async function init() {
           console.error("Failed to switch network:", switchError);
         }
       }
+    }
 
-      signer = provider.getSigner(); //account that is connected
+     signer = provider.getSigner(); //account that is connected
       contract = new ethers.Contract(contractAddress, contractABI, signer);
 
       document.getElementById("connect").style.display = "none";
@@ -285,11 +207,6 @@ document.getElementById("connect").onclick = async function init() {
       document.getElementById("msg").style.display = "flex";
       await playerStat();
 
-    } else {
-      await connectWallet();
-        contract = new ethers.Contract(contractAddress, contractABI, signer);
-      //await playerStat();
-    }
 
   } catch (error) {
     alert("Error connecting wallet:", error);
@@ -331,7 +248,7 @@ document.getElementById("actionButton").onclick = async function () {
   }
 
   await loadLeaderboard();
-  //await playerStat();
+  await playerStat();
 };
 
 document.getElementById("resetGame").onclick = async function () {
@@ -379,7 +296,6 @@ async function loadLeaderboard() {
   }
 }
 
-/** 
 
 async function playerStat() {
   try {
@@ -416,7 +332,6 @@ async function playerStat() {
   }
 }
 
-*/
 
 // Initial load of leaderboard
 window.onload = loadLeaderboard;
