@@ -2,7 +2,6 @@ import { createConfig, http, getAccount, connect } from "https://esm.sh/@wagmi/c
 import { base } from "https://esm.sh/wagmi/chains";
 import { farcasterMiniApp } from "https://esm.sh/@farcaster/miniapp-wagmi-connector";
 import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
-import { ethers } from "https://esm.sh/ethers@6";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -134,7 +133,7 @@ const contractABI = [
 let provider, signer, contract;
 
 const RPC = "https://mainnet.base.org"; // Base RPC
-const readProvider = new ethers.JsonRpcProvider(RPC);
+const readProvider = new ethers.providers.JsonRpcProvider(RPC);
 
 const readContract = new ethers.Contract(
   contractAddress,
