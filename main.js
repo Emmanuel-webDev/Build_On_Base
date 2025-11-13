@@ -161,7 +161,7 @@ const initFarcaster = async () => {
   // skip splash screen
   await sdk.actions.ready();
   await loadLeaderboard();
-  
+
   //Get the native EIP-1193 provider
   const farcasterProvider = await sdk.wallet.getEthereumProvider();
   provider = new ethers.providers.Web3Provider(farcasterProvider);
@@ -304,7 +304,7 @@ document.getElementById("actionButton").onclick = async function () {
   }
 
   await loadLeaderboard();
-  await playerStat();
+  //await playerStat();
 };
 
 document.getElementById("resetGame").onclick = async function () {
