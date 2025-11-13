@@ -134,7 +134,7 @@ const contractABI = [
 let provider, signer, contract;
 
 const RPC = "https://mainnet.base.org"; // Base RPC
-const readProvider = new ethers.providers.JsonRpcProvider(RPC);
+const readProvider = new ethers.JsonRpcProvider(RPC);
 
 const readContract = new ethers.Contract(
   contractAddress,
