@@ -371,14 +371,8 @@ async function playerStat() {
 
     let userData;
 
-    let userAddress = farAddress;
+    let userAddress = await signer.getAddress();
     const loadLeaderboardData = await loadLeaderboard();
-
-    // Check if running in a Mini App
-    const isMiniApp = await sdk.isInMiniApp();
-    if (isMiniApp) {
-      userData = await contract.usersInfo(farAddress);
-    }
 
     userData = await contract.usersInfo(userAddress);
 
