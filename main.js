@@ -306,7 +306,7 @@ document.getElementById("actionButton").onclick = async function () {
   }
 
   await loadLeaderboard();
-  await playerStat();
+  //await playerStat();
 };
 
 document.getElementById("resetGame").onclick = async function () {
