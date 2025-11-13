@@ -273,7 +273,7 @@ document.getElementById("connect").onclick = async function init() {
 
 document.getElementById("actionButton").onclick = async function () {
   if (!signer) {
-    alert("Please connect your wallet first.");
+    console.log("Please connect your wallet first.");
     return;
   }
   const userGuess = document.getElementById("userGuess").value;
