@@ -56,7 +56,7 @@ const switchToBase = async () => {
 
 
     // --- Farcaster Wallet Logic ---
-const initFarcaster = async () => {
+    const initFarcaster = async () => {
   try {
     const isMiniApp = await sdk.isInMiniApp();
 
@@ -147,6 +147,17 @@ const connectWallet = async () => {
         }
       });
     </script>
+
+    // Base Chain Details
+const BASE_CHAIN_ID_HEX = "0x2105"; // 8453 in decimal
+const BASE_CHAIN_ID_DEC = 8453;
+const BASE_NETWORK_INFO = {
+  chainId: BASE_CHAIN_ID_HEX,
+  chainName: "Base Mainnet",
+  nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+  rpcUrls: ["https://mainnet.base.org"],
+  blockExplorerUrls: ["https://basescan.org"],
+};
 
 
     */

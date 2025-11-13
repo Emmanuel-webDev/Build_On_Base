@@ -1,14 +1,7 @@
-
-// Base Chain Details
-const BASE_CHAIN_ID_HEX = "0x2105"; // 8453 in decimal
-const BASE_CHAIN_ID_DEC = 8453;
-const BASE_NETWORK_INFO = {
-  chainId: BASE_CHAIN_ID_HEX,
-  chainName: "Base Mainnet",
-  nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
-  rpcUrls: ["https://mainnet.base.org"],
-  blockExplorerUrls: ["https://basescan.org"],
-};
+import { sdk } from "https://esm.sh/@farcaster/miniapp-sdk";
+import { createConfig, http, connect, getAccount } from "https://esm.sh/wagmi";
+import { base } from "https://esm.sh/wagmi/chains";
+import { farcasterMiniApp } from "https://esm.sh/@farcaster/miniapp-wagmi-connector";
 
 const contractAddress = "0x6F8Bf9b227da8c2bA64125Cbf15aDC85B1F6AF4B"; // Contract address
 
@@ -148,6 +141,67 @@ const readContract = new ethers.Contract(
   readProvider
 );
 
+//Create Wagmi config with the MiniApp connector
+const config = createConfig({
+  chains: [base],
+  transports: { [base.id]: http() },
+  connectors: [farcasterMiniApp()],
+});
+
+// --- Farcaster Wallet connection ---
+const initFarcaster = async () => {
+  // Check if running in a Mini App
+  const isMiniApp = await sdk.isInMiniApp();
+
+  if (!isMiniApp) {
+    console.log("Not in a Farcaster client. Wallet connection may not work.");
+    return;
+  }
+
+  // skip splash screen
+  await sdk.actions.ready();
+
+  //Get the native EIP-1193 provider
+  const farcasterProvider = await sdk.wallet.getEthereumProvider();
+  provider = new ethers.providers.Web3Provider(farcasterProvider);
+
+  signer = provider.getSigner();
+
+  contract = new ethers.Contract(contractAddress, contractABI, signer);
+};
+
+await initFarcaster();
+
+const connectFarcasterWallet = async () => {
+  try {
+    const account = getAccount(config);
+
+    // If already connected
+    if (account.status === "connected") {
+      return;
+    }
+
+    // Otherwise, trigger connect
+    const result = await connect(config, {
+      connector: config.connectors[0],
+    });
+
+    document.getElementById("connect").style.display = "none";
+    const userAddress = result.account[0];
+    document.getElementById(
+      "msg"
+    ).innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="12" fill="#0052FF"/>
+  <path d="M14.45 11.32H9.55C9.22 11.32 8.95 11.59 8.95 11.92C8.95 12.25 9.22 12.52 9.55 12.52H14.45C14.78 12.52 15.05 12.25 15.05 11.92C15.05 11.59 14.78 11.32 14.45 11.32Z" fill="white"/>
+</svg>
+ ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+    document.getElementById("msg").style.display = "flex";
+
+    console.log("Connected:", result);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 document.getElementById("connect").onclick = async function init() {
   try {
@@ -190,9 +244,8 @@ document.getElementById("connect").onclick = async function init() {
           console.error("Failed to switch network:", switchError);
         }
       }
-    }
 
-     signer = provider.getSigner(); //account that is connected
+      signer = provider.getSigner(); //account that is connected
       contract = new ethers.Contract(contractAddress, contractABI, signer);
 
       document.getElementById("connect").style.display = "none";
@@ -206,8 +259,10 @@ document.getElementById("connect").onclick = async function init() {
  ${addr.slice(0, 6)}...${addr.slice(-4)}`;
       document.getElementById("msg").style.display = "flex";
       await playerStat();
-
-
+    } else {
+      // If no Ethereum provider detected, try Farcaster MiniApp connection
+      await connectFarcasterWallet();
+    }
   } catch (error) {
     alert("Error connecting wallet:", error);
   }
@@ -296,7 +351,6 @@ async function loadLeaderboard() {
   }
 }
 
-
 async function playerStat() {
   try {
     if (!signer) {
@@ -305,7 +359,7 @@ async function playerStat() {
     }
 
     const userAddress = await signer.getAddress();
-    console.log(userAddress)
+    console.log(userAddress);
     const loadLeaderboardData = await loadLeaderboard();
 
     const userData = await contract.usersInfo(userAddress);
@@ -331,7 +385,6 @@ async function playerStat() {
     console.error("Error fetching player stats:", error);
   }
 }
-
 
 // Initial load of leaderboard
 window.onload = loadLeaderboard;
