@@ -371,7 +371,7 @@ async function playerStat() {
 
     let userData;
 
-    let userAddress = await signer.getAddress() || farAddress;
+    let userAddress = farAddress;
     const loadLeaderboardData = await loadLeaderboard();
 
     // Check if running in a Mini App
