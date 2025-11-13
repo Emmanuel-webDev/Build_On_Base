@@ -214,11 +214,7 @@ const connectWallet = async () => {
 
     const network = await provider.getNetwork();
     const chainId = network.chainId
-
-    // Check and switch network after connection
-    if (chainId !== BASE_CHAIN_ID_DEC) {
-      await switchToBase();
-    }
+    console.log("Connected to chain ID:", chainId);
 
   } catch (error) {
     console.error("Connection error:", error);
@@ -231,38 +227,6 @@ const connectWallet = async () => {
   }
 };
 
-const switchToBase = async () => {
-  if (!provider) return;
-
-  try {
-    // 1. Attempt to switch network to BASE_CHAIN_ID_HEX (0x2105)
-    await sdk.wallet.switchNetwork(BASE_CHAIN_ID_HEX);
-
-    const network = await provider.getNetwork()
-    console.log(network.name)
-
-  } catch (switchError) {
-    // 3. Check for error code 4902: Chain not added to the wallet
-    if (switchError.code === 4902) {
-      try {
-        // 4. If 4902, request to add the Base Mainnet using BASE_NETWORK_INFO
-        await provider.request({
-          method: "wallet_addEthereumChain",
-          params: [BASE_NETWORK_INFO],
-        });
-        // 5. After successful addition, try connecting again (it usually switches automatically)
-        await connectWallet();
-      } catch (addError) {
-        // Handle rejection of adding chain
-        console.error("Add chain error:", addError);
-      }
-    } else if (switchError.code === 4001) {
-      // Handle user rejection of switching chain
-    } else {
-      console.error("Switch failed:", switchError);
-    }
-  }
-};
 
 document.getElementById("connect").onclick = async function init() {
   try {
@@ -323,8 +287,8 @@ document.getElementById("connect").onclick = async function init() {
 
     } else {
       await connectWallet();
-     contract = new ethers.Contract(contractAddress, contractABI, signer);
-      await playerStat();
+        contract = new ethers.Contract(contractAddress, contractABI, signer);
+      //await playerStat();
     }
 
   } catch (error) {
@@ -415,6 +379,8 @@ async function loadLeaderboard() {
   }
 }
 
+/** 
+
 async function playerStat() {
   try {
     if (!signer) {
@@ -449,6 +415,8 @@ async function playerStat() {
     console.error("Error fetching player stats:", error);
   }
 }
+
+*/
 
 // Initial load of leaderboard
 window.onload = loadLeaderboard;
